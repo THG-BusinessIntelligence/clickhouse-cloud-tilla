@@ -1,8 +1,8 @@
--- Create materialized view for Shopify customer addresses
-CREATE MATERIALIZED VIEW data_shopify.customer_addresses
+-- Create materialized view for Shopify customer address
+CREATE MATERIALIZED VIEW data_shopify.customer_address
 ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(updated_at)
-ORDER BY (id, updated_at)
+PARTITION BY toYYYYMM(assumeNotNull(updated_at))
+ORDER BY (id, assumeNotNull(updated_at))
 SETTINGS index_granularity = 8192
 AS
 SELECT 

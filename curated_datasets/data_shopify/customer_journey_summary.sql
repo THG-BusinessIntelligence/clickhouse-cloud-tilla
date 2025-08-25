@@ -1,3 +1,4 @@
+-- NEW ATTEMPT WITH FIX --- 
 CREATE MATERIALIZED VIEW data_shopify.customer_journey_summary
 ENGINE = ReplacingMergeTree()
 PARTITION BY toYYYYMM(assumeNotNull(updated_at))
@@ -21,7 +22,7 @@ SELECT
     -- First visit info
     JSONExtractInt(customer_journey_summary, 'first_visit', 'id') as first_visit_id,
     JSONExtractString(customer_journey_summary, 'first_visit', 'landing_page') as first_visit_landing_page,
-    parseDateTimeBestEffort(JSONExtractString(customer_journey_summary, 'first_visit', 'occurred_at')) as first_visit_occurred_at,
+    ifNull(parseDateTimeBestEffort(JSONExtractString(customer_journey_summary, 'first_visit', 'occurred_at')), NULL) as first_visit_occurred_at,
     JSONExtractString(customer_journey_summary, 'first_visit', 'referrer_url') as first_visit_referrer_url,
     JSONExtractString(customer_journey_summary, 'first_visit', 'source') as first_visit_source,
     JSONExtractString(customer_journey_summary, 'first_visit', 'source_type') as first_visit_source_type,
@@ -31,7 +32,7 @@ SELECT
     -- Last visit info
     JSONExtractInt(customer_journey_summary, 'last_visit', 'id') as last_visit_id,
     JSONExtractString(customer_journey_summary, 'last_visit', 'landing_page') as last_visit_landing_page,
-    parseDateTimeBestEffort(JSONExtractString(customer_journey_summary, 'last_visit', 'occurred_at')) as last_visit_occurred_at,
+    ifNull(parseDateTimeBestEffort(JSONExtractString(customer_journey_summary, 'last_visit', 'occurred_at')), NULL) as last_visit_occurred_at,
     JSONExtractString(customer_journey_summary, 'last_visit', 'referrer_url') as last_visit_referrer_url,
     JSONExtractString(customer_journey_summary, 'last_visit', 'source') as last_visit_source,
     JSONExtractString(customer_journey_summary, 'last_visit', 'source_type') as last_visit_source_type,

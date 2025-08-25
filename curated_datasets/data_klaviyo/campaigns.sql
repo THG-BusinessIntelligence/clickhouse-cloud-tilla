@@ -45,4 +45,4 @@ SELECT
     
 FROM raw_klaviyo.campaigns
 WHERE id IS NOT NULL 
-  AND updated_at IS NOT NULL;  -- Changed from 'updated' to 'updated_at'
+  AND updated_at IS NOT NULL;  

@@ -1,4 +1,4 @@
--- Create customer journey detail table (FIXED datetime parsing)
+--- AMMENDED WITH FIX 
 CREATE MATERIALIZED VIEW data_shopify.customer_journey_detail
 ENGINE = MergeTree()
 ORDER BY (order_id, visit_id, occurred_at)
@@ -20,7 +20,7 @@ SELECT
     JSONExtractInt(arrayElement(moments, n), 'id') as visit_id,
     n as visit_sequence,
     JSONExtractString(arrayElement(moments, n), 'landing_page') as landing_page,
-    parseDateTimeBestEffort(JSONExtractString(arrayElement(moments, n), 'occurred_at')) as occurred_at,
+    ifNull(parseDateTimeBestEffort(JSONExtractString(arrayElement(moments, n), 'occurred_at')), NULL) as occurred_at,
     JSONExtractString(arrayElement(moments, n), 'referrer_url') as referrer_url,
     JSONExtractString(arrayElement(moments, n), 'source') as source,
     JSONExtractString(arrayElement(moments, n), 'source_type') as source_type,

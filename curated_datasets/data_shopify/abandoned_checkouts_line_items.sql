@@ -1,5 +1,5 @@
 -- Create materialized view for abandoned checkout line items
-CREATE MATERIALIZED VIEW data_shopify.abandoned_checkout_line_items
+CREATE MATERIALIZED VIEW data_shopify.abandoned_checkouts_line_items
 ENGINE = MergeTree()
 ORDER BY (checkout_id, line_item_id, position)
 SETTINGS index_granularity = 8192
