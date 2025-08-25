@@ -3,6 +3,7 @@ CREATE MATERIALIZED VIEW data_shopify.customer_journey_detail
 ENGINE = MergeTree()
 ORDER BY (order_id, visit_id, occurred_at)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 WITH moments_array AS (
     SELECT 

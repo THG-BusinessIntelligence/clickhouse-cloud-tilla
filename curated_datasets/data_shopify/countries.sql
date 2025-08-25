@@ -3,6 +3,7 @@ CREATE MATERIALIZED VIEW data_shopify.countries
 ENGINE = ReplacingMergeTree()
 ORDER BY (id)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 SELECT 
     -- Core fields

@@ -4,6 +4,7 @@ ENGINE = ReplacingMergeTree()
 PARTITION BY toYYYYMM(assumeNotNull(updated_at))
 ORDER BY (id, assumeNotNull(updated_at))
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 SELECT 
     -- Core fields (non-PII only)

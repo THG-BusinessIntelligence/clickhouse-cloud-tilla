@@ -3,6 +3,7 @@ CREATE MATERIALIZED VIEW data_shopify.fulfillment_line_items
 ENGINE = MergeTree()
 ORDER BY (fulfillment_id, line_item_id)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 WITH line_items_expanded AS (
     SELECT 

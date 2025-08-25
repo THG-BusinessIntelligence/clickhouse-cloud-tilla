@@ -3,6 +3,7 @@ CREATE MATERIALIZED VIEW data_shopify.abandoned_checkouts_line_items
 ENGINE = MergeTree()
 ORDER BY (checkout_id, line_item_id, position)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 WITH line_items_expanded AS (
     SELECT 

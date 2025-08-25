@@ -4,6 +4,7 @@ ENGINE = ReplacingMergeTree()
 PARTITION BY toYYYYMM(event_datetime)
 ORDER BY (event_datetime, id)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 SELECT 
     -- Core fields

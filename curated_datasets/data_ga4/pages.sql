@@ -4,6 +4,7 @@ ENGINE = ReplacingMergeTree()
 PARTITION BY toYYYYMM(date)
 ORDER BY (property_id, date, hostName, pagePathPlusQueryString)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 SELECT 
     toDate(date) as date,

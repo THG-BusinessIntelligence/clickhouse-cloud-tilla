@@ -1,9 +1,10 @@
 -- Create materialized view for Klaviyo flows
 CREATE MATERIALIZED VIEW data_klaviyo.flows
 ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(updated_at)  
-ORDER BY (id, updated_at)           
+PARTITION BY toYYYYMM(updated_at)
+ORDER BY (id, updated_at)
 SETTINGS index_granularity = 8192
+POPULATE
 AS
 SELECT 
     -- Core fields
