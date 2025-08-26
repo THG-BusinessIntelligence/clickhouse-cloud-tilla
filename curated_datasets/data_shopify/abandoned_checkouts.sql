@@ -1,10 +1,5 @@
--- Create materialized view for Shopify abandoned checkouts
-CREATE MATERIALIZED VIEW data_shopify.abandoned_checkouts
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(updated_at))
-ORDER BY (id, assumeNotNull(updated_at))
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Shopify abandoned checkouts
+CREATE VIEW data_shopify.abandoned_checkouts
 AS
 SELECT 
     -- Core fields

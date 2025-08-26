@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_refund_adjustments
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(created_at))
-ORDER BY (refund_id, adjustment_id)
-POPULATE
+-- View for Shopify order refund adjustments
+CREATE VIEW data_shopify.order_refund_adjustments
 AS
 SELECT
     -- Refund level fields
@@ -28,8 +25,8 @@ SELECT
     JSONExtractFloat(adjustment_json, 'tax_amount_set', 'shop_money', 'amount') AS tax_shop_money_amount
     
 FROM raw_shopify.order_refunds
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(assumeNotNull(order_adjustments)) AS adjustment_json
-WHERE 
+WHERE
     order_adjustments IS NOT NULL
     AND length(order_adjustments) > 0;

@@ -1,7 +1,5 @@
-CREATE MATERIALIZED VIEW data_ga4.weekly_active_users
-ENGINE = ReplacingMergeTree()
-ORDER BY (date, property_id)
-POPULATE
+-- View for weekly active users
+CREATE VIEW data_ga4.weekly_active_users
 AS
 SELECT
     date,

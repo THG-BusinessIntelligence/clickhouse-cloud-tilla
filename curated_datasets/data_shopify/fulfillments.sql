@@ -1,10 +1,5 @@
--- Create materialized view for Shopify fulfillments (main table)
-CREATE MATERIALIZED VIEW data_shopify.fulfillments
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(updated_at))
-ORDER BY (id, assumeNotNull(updated_at))
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Shopify fulfillments (main table)
+CREATE VIEW data_shopify.fulfillments
 AS
 SELECT 
     -- Core fields

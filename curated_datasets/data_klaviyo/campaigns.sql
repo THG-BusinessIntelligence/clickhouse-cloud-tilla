@@ -1,12 +1,7 @@
--- Create materialized view for Klaviyo campaigns
-CREATE MATERIALIZED VIEW data_klaviyo.campaigns
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(updated_at)
-ORDER BY (id, updated_at)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Klaviyo campaigns
+CREATE VIEW data_klaviyo.campaigns
 AS
-SELECT 
+SELECT
     -- Core fields
     id,
     type,
@@ -45,5 +40,5 @@ SELECT
     JSONExtractString(relationships, 'campaign-messages', 'data', 1, 'id') as campaign_message_id
     
 FROM raw_klaviyo.campaigns
-WHERE id IS NOT NULL 
-  AND updated_at IS NOT NULL;  
+WHERE id IS NOT NULL
+  AND updated_at IS NOT NULL;

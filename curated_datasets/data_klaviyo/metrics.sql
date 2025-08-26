@@ -1,12 +1,7 @@
--- Create materialized view for Klaviyo metrics
-CREATE MATERIALIZED VIEW data_klaviyo.metrics
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(updated_at)
-ORDER BY (id, updated_at)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Klaviyo metrics
+CREATE VIEW data_klaviyo.metrics
 AS
-SELECT 
+SELECT
     -- Core fields
     id,
     type,
@@ -31,5 +26,5 @@ SELECT
     JSONExtractInt(attributes, 'integration', 'category', 'id') as category_id
     
 FROM raw_klaviyo.metrics
-WHERE id IS NOT NULL 
+WHERE id IS NOT NULL
   AND updated IS NOT NULL;

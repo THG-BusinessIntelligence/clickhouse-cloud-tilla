@@ -1,12 +1,7 @@
--- Materialised View for Daily Active Users
-CREATE MATERIALIZED VIEW data_ga4.daily_active_users
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(date)     -- Monthly partitions
-ORDER BY (property_id, date)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Daily Active Users
+CREATE VIEW data_ga4.daily_active_users
 AS
-SELECT 
+SELECT
     toDate(date) as date,
     toDate(endDate) as endDate,
     toDate(startDate) as startDate,

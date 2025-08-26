@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_refund_line_items
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(created_at))
-ORDER BY (refund_id, refund_line_item_id)
-POPULATE
+-- View for Shopify order refund line items
+CREATE VIEW data_shopify.order_refund_line_items
 AS
 SELECT
     -- Refund level fields

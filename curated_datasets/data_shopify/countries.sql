@@ -1,9 +1,5 @@
--- Create materialized view for Shopify countries
-CREATE MATERIALIZED VIEW data_shopify.countries
-ENGINE = ReplacingMergeTree()
-ORDER BY (id)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Shopify countries
+CREATE VIEW data_shopify.countries
 AS
 SELECT 
     -- Core fields

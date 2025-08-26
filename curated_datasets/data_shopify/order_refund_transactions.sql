@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_refund_transactions
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(created_at))
-ORDER BY (refund_id, transaction_id)
-POPULATE
+-- View for Shopify order refund transactions
+CREATE VIEW data_shopify.order_refund_transactions
 AS
 SELECT
     -- Refund level fields
@@ -32,13 +29,13 @@ SELECT
     JSONExtractString(transaction_json, 'status') AS status,
     JSONExtractBool(transaction_json, 'test') AS test,
     
-    -- Payment details - using MULTI-PARAMETER SYNTAX (PROVEN TO WORK!)
+    -- Payment details - using MULTI-PARAMETER SYNTAX
     JSONExtractString(transaction_json, 'payment_details', 'credit_card_company') AS credit_card_company,
     JSONExtractString(transaction_json, 'payment_details', 'payment_method_name') AS payment_method_name
     
 FROM raw_shopify.order_refunds
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(assumeNotNull(transactions)) AS transaction_json
-WHERE 
+WHERE
     transactions IS NOT NULL
     AND length(transactions) > 0;

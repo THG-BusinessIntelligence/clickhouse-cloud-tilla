@@ -1,12 +1,5 @@
--- Create schema if not exists
-CREATE DATABASE IF NOT EXISTS data_shopify;
-
--- Flattened Order Agreements Materialized View
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_agreements_flattened
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(happened_at)
-ORDER BY (order_id, agreement_id, sale_id)
-POPULATE
+-- Flattened Order Agreements View
+CREATE VIEW data_shopify.order_agreements_flattened
 AS
 SELECT
     -- Order level fields (excluding Airbyte metadata)
@@ -41,10 +34,10 @@ SELECT
     JSONExtractFloat(sale_json, 'total_tax_amount.shop_money.amount') AS total_tax_amount
     
 FROM raw_shopify.order_agreements
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(assumeNotNull(agreements)) AS agreement_json
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(agreement_json, 'sales') AS sale_json
-WHERE 
+WHERE
     agreements IS NOT NULL
     AND length(agreements) > 0;

@@ -1,14 +1,10 @@
--- Create materialized view for Shopify customers (FIXED)
-CREATE MATERIALIZED VIEW data_shopify.customers
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(updated_at))
-ORDER BY (id, assumeNotNull(updated_at))
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Shopify customers
+-- Customer data with proper foreign key naming for relationships
+CREATE VIEW data_shopify.customers
 AS
-SELECT 
-    -- Core fields (non-PII)
-    id,
+SELECT
+    -- Primary key
+    id AS customer_id,
     shop_url,
     created_at,
     updated_at,

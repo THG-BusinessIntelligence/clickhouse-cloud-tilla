@@ -1,12 +1,7 @@
--- Create materialized view for traffic_sources table
-CREATE MATERIALIZED VIEW data_ga4.traffic_sources
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(date)
-ORDER BY (property_id, date, sessionSource, sessionMedium)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for traffic_sources table
+CREATE VIEW data_ga4.traffic_sources
 AS
-SELECT 
+SELECT
     toDate(date) as date,
     toDate(endDate) as endDate,
     newUsers,

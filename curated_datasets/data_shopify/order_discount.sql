@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_discount_allocations
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(order_created_at))
-ORDER BY (order_id, line_item_id, discount_application_index)
-POPULATE
+-- View for Shopify order discount allocations
+CREATE VIEW data_shopify.order_discount_allocations
 AS
 SELECT
     -- Order reference
@@ -23,11 +20,11 @@ SELECT
     JSONExtractString(discount_json, 'amount_set', 'shop_money', 'currency_code') AS currency_code
     
 FROM raw_shopify.orders
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(assumeNotNull(line_items)) AS line_item_json
 ARRAY JOIN
     JSONExtractArrayRaw(line_item_json, 'discount_allocations') AS discount_json
-WHERE 
+WHERE
     line_items IS NOT NULL
     AND length(line_items) > 0
-    AND JSONExtractArrayRaw(line_item_json, 'discount_allocations') IS NOT NULL;
+    AND JSONExtractArrayRaw(line_item_json, 'discount_allocations') IS NOT NULL

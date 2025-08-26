@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_payment_gateways
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(created_at))
-ORDER BY (order_id, gateway_name)
-POPULATE
+-- View for Shopify order payment gateways
+CREATE VIEW data_shopify.order_payment_gateways
 AS
 SELECT
     id AS order_id,

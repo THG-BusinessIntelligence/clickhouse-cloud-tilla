@@ -1,12 +1,7 @@
--- Create materialized view for pages table
-CREATE MATERIALIZED VIEW data_ga4.pages
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(date)
-ORDER BY (property_id, date, hostName, pagePathPlusQueryString)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for pages table
+CREATE VIEW data_ga4.pages
 AS
-SELECT 
+SELECT
     toDate(date) as date,
     toDate(endDate) as endDate,
     hostName,

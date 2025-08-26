@@ -1,7 +1,5 @@
-CREATE MATERIALIZED VIEW data_shopify.inventory_items
-ENGINE = ReplacingMergeTree
-ORDER BY id
-POPULATE
+-- View for Shopify inventory items
+CREATE VIEW data_shopify.inventory_items
 AS SELECT
     id,
     sku,

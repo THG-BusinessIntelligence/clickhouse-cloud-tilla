@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_line_items
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(order_created_at))
-ORDER BY (order_id, line_item_id)
-POPULATE
+-- View for Shopify order line items
+CREATE VIEW data_shopify.order_line_items
 AS
 SELECT
     -- Order reference
@@ -50,8 +47,8 @@ SELECT
     JSONExtractFloat(line_item_json, 'total_discount_set', 'shop_money', 'amount') AS total_discount_shop_money
     
 FROM raw_shopify.orders
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(assumeNotNull(line_items)) AS line_item_json
-WHERE 
+WHERE
     line_items IS NOT NULL
-    AND length(line_items) > 0;
+    AND length(line_items) > 0

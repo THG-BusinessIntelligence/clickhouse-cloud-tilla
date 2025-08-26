@@ -1,7 +1,5 @@
-CREATE MATERIALIZED VIEW data_shopify.locations
-ENGINE = ReplacingMergeTree
-ORDER BY id
-POPULATE
+-- View for Shopify locations
+CREATE VIEW data_shopify.locations
 AS SELECT
     id,
     zip,

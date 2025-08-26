@@ -1,8 +1,5 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS data_shopify.order_tax_lines
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(order_created_at))
-ORDER BY (order_id, line_item_id, tax_title)
-POPULATE
+-- View for Shopify order tax lines
+CREATE VIEW data_shopify.order_tax_lines
 AS
 SELECT
     -- Order reference
@@ -25,11 +22,11 @@ SELECT
     JSONExtractString(tax_json, 'price_set', 'shop_money', 'currency_code') AS currency_code
     
 FROM raw_shopify.orders
-ARRAY JOIN 
+ARRAY JOIN
     JSONExtractArrayRaw(assumeNotNull(line_items)) AS line_item_json
 ARRAY JOIN
     JSONExtractArrayRaw(line_item_json, 'tax_lines') AS tax_json
-WHERE 
+WHERE
     line_items IS NOT NULL
     AND length(line_items) > 0
-    AND JSONExtractArrayRaw(line_item_json, 'tax_lines') IS NOT NULL;
+    AND JSONExtractArrayRaw(line_item_json, 'tax_lines') IS NOT NULL

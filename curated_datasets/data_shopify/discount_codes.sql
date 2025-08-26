@@ -1,10 +1,5 @@
--- Create materialized view for Shopify discount codes
-CREATE MATERIALIZED VIEW data_shopify.discount_codes
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(updated_at))
-ORDER BY (id, assumeNotNull(updated_at))
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Shopify discount codes
+CREATE VIEW data_shopify.discount_codes
 AS
 SELECT 
     -- Core fields

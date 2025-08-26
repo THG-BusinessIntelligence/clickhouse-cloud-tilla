@@ -1,12 +1,7 @@
--- Create materialized view for locations table
-CREATE MATERIALIZED VIEW data_ga4.locations
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(date)
-ORDER BY (property_id, date, country, region, city)
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for locations table
+CREATE VIEW data_ga4.locations
 AS
-SELECT 
+SELECT
     city,
     toDate(date) as date,
     region,

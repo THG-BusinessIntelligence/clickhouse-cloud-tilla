@@ -1,10 +1,5 @@
--- Create materialized view for Shopify customer address
-CREATE MATERIALIZED VIEW data_shopify.customer_address
-ENGINE = ReplacingMergeTree()
-PARTITION BY toYYYYMM(assumeNotNull(updated_at))
-ORDER BY (id, assumeNotNull(updated_at))
-SETTINGS index_granularity = 8192
-POPULATE
+-- View for Shopify customer address
+CREATE VIEW data_shopify.customer_address
 AS
 SELECT 
     -- Core fields (non-PII only)
@@ -15,7 +10,7 @@ SELECT
     country_name,
     province,
     province_code,
-    default,
+    "default" AS is_default,  -- Aliasing 'default' as it's a reserved keyword
     shop_url,
     updated_at
     
