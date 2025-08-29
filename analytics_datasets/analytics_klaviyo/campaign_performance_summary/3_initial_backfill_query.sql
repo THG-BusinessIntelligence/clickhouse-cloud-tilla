@@ -16,8 +16,8 @@ WITH event_data AS (
     DATE(e.datetime) AS event_date,
     
     -- Extract campaign information from event properties
-    JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties.$message') AS message_id,
-    JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties.Campaign Name') AS campaign_name,
+    JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties["$message"]') AS message_id,
+    JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties["Campaign Name"]') AS campaign_name,
     
     -- Profile ID from relationships
     JSON_EXTRACT_SCALAR(e.relationships, '$.profile.data.id') AS profile_id,
@@ -29,7 +29,7 @@ WITH event_data AS (
     e.type AS event_type,
     
     -- Extract revenue if present
-    CAST(JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties.$value') AS NUMERIC) AS revenue,
+    CAST(JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties["$value"]') AS NUMERIC) AS revenue,
     
     -- Event timestamp
     e.datetime AS event_timestamp
@@ -40,8 +40,9 @@ WITH event_data AS (
     -- Process last 30 days of data
     DATE(e.datetime) >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
     AND e.datetime < CURRENT_TIMESTAMP()
-    -- Filter for email-related events (has ESP indicator)
-    AND JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties.$ESP') IS NOT NULL
+    -- Filter for email-related events (has ESP indicator or Campaign Name)
+    AND (JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties["$ESP"]') IS NOT NULL
+         OR JSON_EXTRACT_SCALAR(e.attributes, '$.event_properties["Campaign Name"]') IS NOT NULL)
 ),
 
 -- Join with campaigns to get campaign_id
