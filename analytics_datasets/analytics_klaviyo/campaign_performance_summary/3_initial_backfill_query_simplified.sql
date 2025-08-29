@@ -7,16 +7,21 @@
 
 INSERT INTO `tilla-airbyte-staging.analytics_klaviyo.campaign_performance_summary`
 WITH event_data AS (
-  -- Extract campaign events from the last 30 days
+  -- Extract ALL Klaviyo events from the last 30 days first
+  -- Based on your example: attributes has event_properties with Campaign Name
   SELECT
     DATE(e.datetime) AS event_date,
     
-    -- Extract campaign information - simplified approach
-    -- We'll extract the full event_properties object and parse it differently
+    -- Extract the full attributes and event_properties
+    e.attributes,
     JSON_EXTRACT(e.attributes, '$.event_properties') AS event_props,
-    e.attributes AS full_attributes,
     
-    -- Profile ID from relationships (this works fine)
+    -- Extract specific fields based on your example structure
+    JSON_VALUE(e.attributes, '$.event_properties.Campaign Name') AS campaign_name_direct,
+    JSON_VALUE(e.attributes, '$.event_properties.$message') AS message_id_direct,
+    CAST(JSON_VALUE(e.attributes, '$.event_properties.$value') AS NUMERIC) AS revenue_direct,
+    
+    -- Profile ID from relationships
     JSON_VALUE(e.relationships, '$.profile.data.id') AS profile_id,
     
     -- Metric ID to identify event type
@@ -34,31 +39,41 @@ WITH event_data AS (
     -- Process last 30 days of data
     DATE(e.datetime) >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
     AND e.datetime < CURRENT_TIMESTAMP()
-    -- Filter for events that have Campaign Name (avoiding $ESP for now)
-    AND JSON_EXTRACT(e.attributes, '$.event_properties') IS NOT NULL
-    AND TO_JSON_STRING(JSON_EXTRACT(e.attributes, '$.event_properties')) LIKE '%Campaign Name%'
+    -- Remove restrictive filter - we'll filter after extraction
 ),
 
--- Parse the campaign data
-parsed_events AS (
+-- Filter for events that have campaign data
+filtered_events AS (
   SELECT
     event_date,
     profile_id,
     metric_id,
     event_type,
     
-    -- Extract campaign name using REGEXP_EXTRACT as a workaround
-    REGEXP_EXTRACT(TO_JSON_STRING(event_props), r'"Campaign Name":"([^"]+)"') AS campaign_name,
+    -- Use direct extraction or fallback to REGEXP
+    COALESCE(
+      campaign_name_direct,
+      REGEXP_EXTRACT(TO_JSON_STRING(event_props), r'"Campaign Name":"([^"]+)"')
+    ) AS campaign_name,
     
-    -- Extract message ID
-    REGEXP_EXTRACT(TO_JSON_STRING(event_props), r'"\$message":"([^"]+)"') AS message_id,
+    COALESCE(
+      message_id_direct,
+      REGEXP_EXTRACT(TO_JSON_STRING(event_props), r'"\$message":"([^"]+)"')
+    ) AS message_id,
     
-    -- Extract revenue value if present
-    CAST(REGEXP_EXTRACT(TO_JSON_STRING(event_props), r'"\$value":([0-9.]+)') AS NUMERIC) AS revenue,
+    COALESCE(
+      revenue_direct,
+      CAST(REGEXP_EXTRACT(TO_JSON_STRING(event_props), r'"\$value":([0-9.]+)') AS NUMERIC)
+    ) AS revenue,
     
     event_timestamp
   FROM
     event_data
+  WHERE
+    -- Only keep events that have either a campaign name or message ID
+    campaign_name_direct IS NOT NULL
+    OR message_id_direct IS NOT NULL
+    OR TO_JSON_STRING(event_props) LIKE '%Campaign Name%'
 ),
 
 -- Join with campaigns to get campaign_id
@@ -138,7 +153,7 @@ aggregated_metrics AS (
     COUNT(DISTINCT e.profile_id) AS unique_profiles
     
   FROM
-    parsed_events e
+    filtered_events e
   LEFT JOIN
     campaign_mapping cm ON e.campaign_name = cm.campaign_name_from_campaigns
   WHERE
