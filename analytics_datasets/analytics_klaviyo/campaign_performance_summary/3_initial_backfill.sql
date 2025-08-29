@@ -1,6 +1,6 @@
 -- Initial backfill query for campaign performance summary table
 -- This query aggregates Klaviyo events by campaign and date
--- Metrics are counted by event type, not by extracting values from JSON
+-- Using actual metric_id values from the metrics table
 
 INSERT INTO `tilla-airbyte-staging.analytics_klaviyo.campaign_performance_summary`
 WITH campaign_events AS (
@@ -34,42 +34,48 @@ SELECT
   campaign_id,
   campaign_name,
   message_id,
-  -- Count events by metric_id patterns (following the scheduled query pattern)
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%send%' THEN profile_id END) as total_sends,
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%open%' THEN profile_id END) as unique_opens,
-  COUNT(CASE WHEN metric_id LIKE '%open%' THEN 1 END) as total_opens,
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%click%' THEN profile_id END) as unique_clicks,
-  COUNT(CASE WHEN metric_id LIKE '%click%' THEN 1 END) as total_clicks,
+  -- Email metrics using actual metric_id values
+  -- Qfbz2d = Received Email (count as sends)
+  COUNT(DISTINCT CASE WHEN metric_id = 'Qfbz2d' THEN profile_id END) as total_sends,
+  -- LEjMZf = Opened Email
+  COUNT(DISTINCT CASE WHEN metric_id = 'LEjMZf' THEN profile_id END) as unique_opens,
+  COUNT(CASE WHEN metric_id = 'LEjMZf' THEN 1 END) as total_opens,
+  -- Jjw8dx = Clicked Email
+  COUNT(DISTINCT CASE WHEN metric_id = 'Jjw8dx' THEN profile_id END) as unique_clicks,
+  COUNT(CASE WHEN metric_id = 'Jjw8dx' THEN 1 END) as total_clicks,
   -- Engagement metrics
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%unsub%' THEN profile_id END) as unsubscribes,
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%spam%' THEN profile_id END) as spam_reports,
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%bounce%' THEN profile_id END) as bounces,
-  -- Conversion metrics
-  COUNT(DISTINCT CASE WHEN metric_id LIKE '%order%' THEN profile_id END) as placed_orders,
-  SUM(CASE WHEN metric_id LIKE '%order%' THEN ordered_products END) as ordered_products,
-  SUM(CASE WHEN metric_id LIKE '%order%' THEN event_value END) as total_revenue,
+  -- MQVnVi = Clicked email to unsubscribe
+  COUNT(DISTINCT CASE WHEN metric_id = 'MQVnVi' THEN profile_id END) as unsubscribes,
+  -- Qgnj4q = Marked Email as Spam
+  COUNT(DISTINCT CASE WHEN metric_id = 'Qgnj4q' THEN profile_id END) as spam_reports,
+  -- HD4zhH = Bounced Email
+  COUNT(DISTINCT CASE WHEN metric_id = 'HD4zhH' THEN profile_id END) as bounces,
+  -- Conversion metrics (keeping generic for orders as we don't have specific metric_id yet)
+  COUNT(DISTINCT CASE WHEN LOWER(metric_id) LIKE '%order%' OR event_value > 0 THEN profile_id END) as placed_orders,
+  SUM(CASE WHEN event_value > 0 THEN ordered_products END) as ordered_products,
+  SUM(CASE WHEN event_value > 0 THEN event_value END) as total_revenue,
   -- Count unique profiles
   COUNT(DISTINCT profile_id) as unique_profiles,
   -- Calculate rates
   SAFE_DIVIDE(
-    COUNT(DISTINCT CASE WHEN metric_id LIKE '%open%' THEN profile_id END),
-    NULLIF(COUNT(DISTINCT CASE WHEN metric_id LIKE '%send%' THEN profile_id END), 0)
+    COUNT(DISTINCT CASE WHEN metric_id = 'LEjMZf' THEN profile_id END),  -- Opens
+    NULLIF(COUNT(DISTINCT CASE WHEN metric_id = 'Qfbz2d' THEN profile_id END), 0)  -- Sends
   ) as open_rate,
   SAFE_DIVIDE(
-    COUNT(DISTINCT CASE WHEN metric_id LIKE '%click%' THEN profile_id END),
-    NULLIF(COUNT(DISTINCT CASE WHEN metric_id LIKE '%send%' THEN profile_id END), 0)
+    COUNT(DISTINCT CASE WHEN metric_id = 'Jjw8dx' THEN profile_id END),  -- Clicks
+    NULLIF(COUNT(DISTINCT CASE WHEN metric_id = 'Qfbz2d' THEN profile_id END), 0)  -- Sends
   ) as click_rate,
   SAFE_DIVIDE(
-    COUNT(DISTINCT CASE WHEN metric_id LIKE '%click%' THEN profile_id END),
-    NULLIF(COUNT(DISTINCT CASE WHEN metric_id LIKE '%open%' THEN profile_id END), 0)
+    COUNT(DISTINCT CASE WHEN metric_id = 'Jjw8dx' THEN profile_id END),  -- Clicks
+    NULLIF(COUNT(DISTINCT CASE WHEN metric_id = 'LEjMZf' THEN profile_id END), 0)  -- Opens
   ) as click_to_open_rate,
   SAFE_DIVIDE(
-    COUNT(DISTINCT CASE WHEN metric_id LIKE '%unsub%' THEN profile_id END),
-    NULLIF(COUNT(DISTINCT CASE WHEN metric_id LIKE '%send%' THEN profile_id END), 0)
+    COUNT(DISTINCT CASE WHEN metric_id = 'MQVnVi' THEN profile_id END),  -- Unsubscribes
+    NULLIF(COUNT(DISTINCT CASE WHEN metric_id = 'Qfbz2d' THEN profile_id END), 0)  -- Sends
   ) as unsubscribe_rate,
   SAFE_DIVIDE(
-    COUNT(DISTINCT CASE WHEN metric_id LIKE '%bounce%' THEN profile_id END),
-    NULLIF(COUNT(DISTINCT CASE WHEN metric_id LIKE '%send%' THEN profile_id END), 0)
+    COUNT(DISTINCT CASE WHEN metric_id = 'HD4zhH' THEN profile_id END),  -- Bounces
+    NULLIF(COUNT(DISTINCT CASE WHEN metric_id = 'Qfbz2d' THEN profile_id END), 0)  -- Sends
   ) as bounce_rate,
   CURRENT_TIMESTAMP() as last_updated_at,
   CURRENT_TIMESTAMP() as processing_timestamp
@@ -80,3 +86,12 @@ GROUP BY
   campaign_id,
   campaign_name,
   message_id;
+
+-- Metric ID Reference:
+-- Qfbz2d = Received Email (used as sends)
+-- LEjMZf = Opened Email
+-- Jjw8dx = Clicked Email
+-- MQVnVi = Clicked email to unsubscribe
+-- HD4zhH = Bounced Email
+-- Qgnj4q = Marked Email as Spam
+-- H23wF6 = Dropped Email (not currently used in metrics)
