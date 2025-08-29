@@ -26,7 +26,7 @@ WITH earliest_dates AS (
   FROM `thg-prod-cloud-dw.CloudDWConsolidated_Tilla.Customer_Profile`
   
   UNION ALL
-  
+  `
   SELECT 'Order_Discount', MIN(Updated_Date), COUNT(*) 
   FROM `thg-prod-cloud-dw.CloudDWConsolidated_Tilla.Order_Discount`
   
