@@ -1,5 +1,7 @@
--- View for Shopify inventory items
-CREATE VIEW data_shopify.inventory_items
+-- Materialized View for Shopify inventory items
+CREATE MATERIALIZED VIEW data_shopify.inventory_items
+ENGINE = MergeTree()
+ORDER BY (id, updated_at)
 AS SELECT
     id,
     sku,

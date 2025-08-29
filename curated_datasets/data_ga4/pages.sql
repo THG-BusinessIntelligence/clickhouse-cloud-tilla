@@ -1,5 +1,7 @@
--- View for pages table
-CREATE VIEW data_ga4.pages
+-- Materialized View for pages table
+CREATE MATERIALIZED VIEW data_ga4.pages
+ENGINE = MergeTree()
+ORDER BY (date, property_id, pagePathPlusQueryString)
 AS
 SELECT
     toDate(date) as date,

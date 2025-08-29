@@ -1,5 +1,7 @@
--- View for locations table
-CREATE VIEW data_ga4.locations
+-- Materialized View for locations table
+CREATE MATERIALIZED VIEW data_ga4.locations
+ENGINE = MergeTree()
+ORDER BY (date, property_id, country, region)
 AS
 SELECT
     city,

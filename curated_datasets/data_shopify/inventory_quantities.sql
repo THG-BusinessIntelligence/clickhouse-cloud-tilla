@@ -1,6 +1,8 @@
 
--- View for Shopify inventory quantities
-CREATE VIEW data_shopify.inventory_quantities
+-- Materialized View for Shopify inventory quantities
+CREATE MATERIALIZED VIEW data_shopify.inventory_quantities
+ENGINE = MergeTree()
+ORDER BY (id, quantity_name)
 AS SELECT
     id,
     JSONExtractString(quantity_item, 'name') AS quantity_name,

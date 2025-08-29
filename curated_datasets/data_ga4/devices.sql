@@ -1,5 +1,7 @@
--- View for devices table
-CREATE VIEW data_ga4.devices
+-- Materialized View for devices table
+CREATE MATERIALIZED VIEW data_ga4.devices
+ENGINE = MergeTree()
+ORDER BY (date, property_id, deviceCategory)
 AS
 SELECT
     toDate(date) as date,

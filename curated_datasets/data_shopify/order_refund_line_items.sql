@@ -1,5 +1,7 @@
--- View for Shopify order refund line items
-CREATE VIEW data_shopify.order_refund_line_items
+-- Materialized View for Shopify order refund line items
+CREATE MATERIALIZED VIEW data_shopify.order_refund_line_items
+ENGINE = MergeTree()
+ORDER BY (refund_id, line_item_id)
 AS
 SELECT
     -- Refund level fields

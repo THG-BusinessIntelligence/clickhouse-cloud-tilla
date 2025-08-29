@@ -1,5 +1,7 @@
--- View for Shopify order discount allocations
-CREATE VIEW data_shopify.order_discount_allocations
+-- Materialized View for Shopify order discount allocations
+CREATE MATERIALIZED VIEW data_shopify.order_discount_allocations
+ENGINE = MergeTree()
+ORDER BY (order_id, line_item_id)
 AS
 SELECT
     -- Order reference

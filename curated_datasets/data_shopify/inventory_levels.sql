@@ -1,5 +1,7 @@
--- View for Shopify inventory levels
-CREATE VIEW data_shopify.inventory_levels
+-- Materialized View for Shopify inventory levels
+CREATE MATERIALIZED VIEW data_shopify.inventory_levels
+ENGINE = MergeTree()
+ORDER BY (id, inventory_item_id, location_id)
 AS SELECT
     id,
     shop_url,

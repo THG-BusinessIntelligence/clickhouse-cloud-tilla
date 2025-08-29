@@ -1,5 +1,7 @@
--- View for Shopify abandoned checkouts
-CREATE VIEW data_shopify.abandoned_checkouts
+-- Materialized View for Shopify abandoned checkouts
+CREATE MATERIALIZED VIEW data_shopify.abandoned_checkouts
+ENGINE = MergeTree()
+ORDER BY (id, updated_at)
 AS
 SELECT 
     -- Core fields

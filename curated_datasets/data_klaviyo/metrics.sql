@@ -1,5 +1,7 @@
--- View for Klaviyo metrics
-CREATE VIEW data_klaviyo.metrics
+-- Materialized View for Klaviyo metrics
+CREATE MATERIALIZED VIEW data_klaviyo.metrics
+ENGINE = MergeTree()
+ORDER BY (id, updated_at)
 AS
 SELECT
     -- Core fields

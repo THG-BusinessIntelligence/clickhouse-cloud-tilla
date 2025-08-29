@@ -1,5 +1,7 @@
--- View for Shopify customer address
-CREATE VIEW data_shopify.customer_address
+-- Materialized View for Shopify customer address
+CREATE MATERIALIZED VIEW data_shopify.customer_address
+ENGINE = MergeTree()
+ORDER BY (id, customer_id, updated_at)
 AS
 SELECT 
     -- Core fields (non-PII only)

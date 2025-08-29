@@ -1,5 +1,7 @@
--- View for traffic_sources table
-CREATE VIEW data_ga4.traffic_sources
+-- Materialized View for traffic_sources table
+CREATE MATERIALIZED VIEW data_ga4.traffic_sources
+ENGINE = MergeTree()
+ORDER BY (date, property_id, sessionSource, sessionMedium)
 AS
 SELECT
     toDate(date) as date,

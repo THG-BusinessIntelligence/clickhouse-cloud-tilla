@@ -1,5 +1,7 @@
--- View for four_weekly_active_users table
-CREATE VIEW data_ga4.four_weekly_active_users
+-- Materialized View for four_weekly_active_users table
+CREATE MATERIALIZED VIEW data_ga4.four_weekly_active_users
+ENGINE = MergeTree()
+ORDER BY (date, property_id)
 AS
 SELECT
     toDate(date) as date,

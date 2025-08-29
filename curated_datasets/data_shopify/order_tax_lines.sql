@@ -1,5 +1,7 @@
--- View for Shopify order tax lines
-CREATE VIEW data_shopify.order_tax_lines
+-- Materialized View for Shopify order tax lines
+CREATE MATERIALIZED VIEW data_shopify.order_tax_lines
+ENGINE = MergeTree()
+ORDER BY (order_id, line_item_id)
 AS
 SELECT
     -- Order reference

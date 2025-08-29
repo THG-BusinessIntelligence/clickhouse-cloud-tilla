@@ -1,5 +1,7 @@
--- Flattened Order Agreements View
-CREATE VIEW data_shopify.order_agreements_flattened
+-- Flattened Order Agreements Materialized View
+CREATE MATERIALIZED VIEW data_shopify.order_agreements_flattened
+ENGINE = MergeTree()
+ORDER BY (order_id, agreement_id, sale_id)
 AS
 SELECT
     -- Order level fields (excluding Airbyte metadata)

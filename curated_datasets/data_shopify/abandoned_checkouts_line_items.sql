@@ -1,5 +1,7 @@
--- View for abandoned checkout line items
-CREATE VIEW data_shopify.abandoned_checkouts_line_items
+-- Materialized View for abandoned checkout line items
+CREATE MATERIALIZED VIEW data_shopify.abandoned_checkouts_line_items
+ENGINE = MergeTree()
+ORDER BY (checkout_id, line_item_id)
 AS
 SELECT
     id as checkout_id,

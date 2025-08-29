@@ -1,5 +1,7 @@
--- Customer journey summary - converted to regular VIEW with fixed DateTime parsing
-CREATE VIEW data_shopify.customer_journey_summary
+-- Customer journey summary - Materialized View with fixed DateTime parsing
+CREATE MATERIALIZED VIEW data_shopify.customer_journey_summary
+ENGINE = MergeTree()
+ORDER BY (order_id, updated_at)
 AS
 SELECT
     -- Core fields

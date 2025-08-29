@@ -1,5 +1,7 @@
--- View for Shopify order payment gateways
-CREATE VIEW data_shopify.order_payment_gateways
+-- Materialized View for Shopify order payment gateways
+CREATE MATERIALIZED VIEW data_shopify.order_payment_gateways
+ENGINE = MergeTree()
+ORDER BY (order_id, gateway_name)
 AS
 SELECT
     id AS order_id,

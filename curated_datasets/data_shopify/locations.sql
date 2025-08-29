@@ -1,5 +1,7 @@
--- View for Shopify locations
-CREATE VIEW data_shopify.locations
+-- Materialized View for Shopify locations
+CREATE MATERIALIZED VIEW data_shopify.locations
+ENGINE = MergeTree()
+ORDER BY (id, updated_at)
 AS SELECT
     id,
     zip,

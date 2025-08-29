@@ -1,5 +1,7 @@
--- View for Shopify countries
-CREATE VIEW data_shopify.countries
+-- Materialized View for Shopify countries
+CREATE MATERIALIZED VIEW data_shopify.countries
+ENGINE = MergeTree()
+ORDER BY (id, code)
 AS
 SELECT 
     -- Core fields

@@ -1,5 +1,7 @@
--- View for Shopify discount codes
-CREATE VIEW data_shopify.discount_codes
+-- Materialized View for Shopify discount codes
+CREATE MATERIALIZED VIEW data_shopify.discount_codes
+ENGINE = MergeTree()
+ORDER BY (id, updated_at)
 AS
 SELECT 
     -- Core fields

@@ -1,5 +1,7 @@
--- View for website_overview table
-CREATE VIEW data_ga4.website_overview
+-- Materialized View for website_overview table
+CREATE MATERIALIZED VIEW data_ga4.website_overview
+ENGINE = MergeTree()
+ORDER BY (date, property_id)
 AS
 SELECT
     toDate(date) as date,

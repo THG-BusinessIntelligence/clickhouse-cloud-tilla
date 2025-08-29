@@ -1,6 +1,8 @@
 -- Shopify orders core table
--- Simplified view with separate tables for nested data
-CREATE VIEW data_shopify.orders
+-- Simplified materialized view with separate tables for nested data
+CREATE MATERIALIZED VIEW data_shopify.orders
+ENGINE = MergeTree()
+ORDER BY (order_id, created_at)
 AS
 SELECT
     -- Primary key

@@ -1,5 +1,7 @@
--- View for Shopify order refund adjustments
-CREATE VIEW data_shopify.order_refund_adjustments
+-- Materialized View for Shopify order refund adjustments
+CREATE MATERIALIZED VIEW data_shopify.order_refund_adjustments
+ENGINE = MergeTree()
+ORDER BY (refund_id, adjustment_id)
 AS
 SELECT
     -- Refund level fields

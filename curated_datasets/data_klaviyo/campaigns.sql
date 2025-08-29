@@ -1,5 +1,7 @@
--- View for Klaviyo campaigns
-CREATE VIEW data_klaviyo.campaigns
+-- Materialized View for Klaviyo campaigns
+CREATE MATERIALIZED VIEW data_klaviyo.campaigns
+ENGINE = MergeTree()
+ORDER BY (id, updated_at)
 AS
 SELECT
     -- Core fields

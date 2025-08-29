@@ -1,5 +1,7 @@
--- View for Daily Active Users
-CREATE VIEW data_ga4.daily_active_users
+-- Materialized View for Daily Active Users
+CREATE MATERIALIZED VIEW data_ga4.daily_active_users
+ENGINE = MergeTree()
+ORDER BY (date, property_id)
 AS
 SELECT
     toDate(date) as date,

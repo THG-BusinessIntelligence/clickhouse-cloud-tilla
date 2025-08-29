@@ -1,5 +1,7 @@
--- View for Shopify fulfillments (main table)
-CREATE VIEW data_shopify.fulfillments
+-- Materialized View for Shopify fulfillments (main table)
+CREATE MATERIALIZED VIEW data_shopify.fulfillments
+ENGINE = MergeTree()
+ORDER BY (id, order_id, updated_at)
 AS
 SELECT 
     -- Core fields

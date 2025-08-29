@@ -1,5 +1,7 @@
--- View for fulfillment line items
-CREATE VIEW data_shopify.fulfillment_line_items
+-- Materialized View for fulfillment line items
+CREATE MATERIALIZED VIEW data_shopify.fulfillment_line_items
+ENGINE = MergeTree()
+ORDER BY (fulfillment_id, line_item_id)
 AS
 SELECT
     id as fulfillment_id,

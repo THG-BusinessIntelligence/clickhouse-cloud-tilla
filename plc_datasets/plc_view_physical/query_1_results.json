@@ -1,0 +1,239 @@
+[{
+  "Table_Name": "Sessions_Detail",
+  "Row_Count": "1145890728",
+  "Size_MB": "938306.24",
+  "Size_GB": "916.315",
+  "Created_At": "2025-08-26T21:08:15.583000",
+  "Last_Modified": "2025-08-26T21:08:15.583000"
+}, {
+  "Table_Name": "Order_Line",
+  "Row_Count": "199369960",
+  "Size_MB": "82514.12",
+  "Size_GB": "80.58",
+  "Created_At": "2025-08-26T20:51:07.049000",
+  "Last_Modified": "2025-08-26T20:51:07.049000"
+}, {
+  "Table_Name": "Order_Header",
+  "Row_Count": "71586972",
+  "Size_MB": "47472.77",
+  "Size_GB": "46.36",
+  "Created_At": "2025-08-26T20:50:58.306000",
+  "Last_Modified": "2025-08-26T20:50:58.306000"
+}, {
+  "Table_Name": "Sessions",
+  "Row_Count": "200336022",
+  "Size_MB": "40334.1",
+  "Size_GB": "39.389",
+  "Created_At": "2025-08-26T21:07:36.418000",
+  "Last_Modified": "2025-08-26T21:07:36.419000"
+}, {
+  "Table_Name": "Stock_Details",
+  "Row_Count": "330326595",
+  "Size_MB": "38495.89",
+  "Size_GB": "37.594",
+  "Created_At": "2025-08-26T21:14:33.356000",
+  "Last_Modified": "2025-08-26T21:14:33.356000"
+}, {
+  "Table_Name": "Customer_Details",
+  "Row_Count": "78028995",
+  "Size_MB": "25707.13",
+  "Size_GB": "25.105",
+  "Created_At": "2025-08-26T20:50:24.616000",
+  "Last_Modified": "2025-08-26T20:50:24.616000"
+}, {
+  "Table_Name": "Order_Discount_Split",
+  "Row_Count": "261748527",
+  "Size_MB": "24233.26",
+  "Size_GB": "23.665",
+  "Created_At": "2025-08-26T20:50:46.467000",
+  "Last_Modified": "2025-08-26T20:50:46.467000"
+}, {
+  "Table_Name": "Order_Discount",
+  "Row_Count": "95413126",
+  "Size_MB": "14849.87",
+  "Size_GB": "14.502",
+  "Created_At": "2025-08-26T20:50:40.833000",
+  "Last_Modified": "2025-08-26T20:50:40.833000"
+}, {
+  "Table_Name": "Product_Site_Price_History",
+  "Row_Count": "77281931",
+  "Size_MB": "8724.89",
+  "Size_GB": "8.52",
+  "Created_At": "2025-08-26T20:51:31.055000",
+  "Last_Modified": "2025-08-26T20:51:31.055000"
+}, {
+  "Table_Name": "Product_Site_Price",
+  "Row_Count": "62011361",
+  "Size_MB": "6971.48",
+  "Size_GB": "6.808",
+  "Created_At": "2025-08-26T20:51:26.183000",
+  "Last_Modified": "2025-08-26T20:51:26.183000"
+}, {
+  "Table_Name": "Customer_Profile",
+  "Row_Count": "24723420",
+  "Size_MB": "3259.04",
+  "Size_GB": "3.183",
+  "Created_At": "2025-08-26T20:50:28.371000",
+  "Last_Modified": "2025-08-26T20:50:28.371000"
+}, {
+  "Table_Name": "Refund_Shipment_Line",
+  "Row_Count": "2726610",
+  "Size_MB": "673.58",
+  "Size_GB": "0.658",
+  "Created_At": "2025-08-26T20:51:36.949000",
+  "Last_Modified": "2025-08-26T20:51:36.949000"
+}, {
+  "Table_Name": "Return_Order_Line",
+  "Row_Count": "2617501",
+  "Size_MB": "634.96",
+  "Size_GB": "0.62",
+  "Created_At": "2025-08-26T20:51:39.904000",
+  "Last_Modified": "2025-08-26T20:51:39.904000"
+}, {
+  "Table_Name": "Product_Dim",
+  "Row_Count": "1026834",
+  "Size_MB": "357.83",
+  "Size_GB": "0.349",
+  "Created_At": "2025-08-26T20:51:19.227000",
+  "Last_Modified": "2025-08-26T20:51:19.227000"
+}, {
+  "Table_Name": "Subscription_Header",
+  "Row_Count": "1475983",
+  "Size_MB": "241.74",
+  "Size_GB": "0.236",
+  "Created_At": "2025-08-26T21:14:37.143000",
+  "Last_Modified": "2025-08-26T21:14:37.143000"
+}, {
+  "Table_Name": "Special_Offers",
+  "Row_Count": "482994",
+  "Size_MB": "195.95",
+  "Size_GB": "0.191",
+  "Created_At": "2025-08-26T21:08:27.068000",
+  "Last_Modified": "2025-08-26T21:08:27.068000"
+}, {
+  "Table_Name": "Subscription_Schedule",
+  "Row_Count": "791068",
+  "Size_MB": "148.29",
+  "Size_GB": "0.145",
+  "Created_At": "2025-08-26T21:14:42.900000",
+  "Last_Modified": "2025-08-26T21:14:42.900000"
+}, {
+  "Table_Name": "Exchange_Rate",
+  "Row_Count": "2668150",
+  "Size_MB": "127.23",
+  "Size_GB": "0.124",
+  "Created_At": "2025-08-26T20:50:32.810000",
+  "Last_Modified": "2025-08-26T20:50:32.810000"
+}, {
+  "Table_Name": "Special_Offer_Discount_Code",
+  "Row_Count": "1081898",
+  "Size_MB": "117.67",
+  "Size_GB": "0.115",
+  "Created_At": "2025-08-26T21:08:21.114000",
+  "Last_Modified": "2025-08-26T21:08:21.114000"
+}, {
+  "Table_Name": "Refund_Order_Line",
+  "Row_Count": "161058",
+  "Size_MB": "38.82",
+  "Size_GB": "0.038",
+  "Created_At": "2025-08-26T20:51:33.870000",
+  "Last_Modified": "2025-08-26T20:51:33.870000"
+}, {
+  "Table_Name": "Nutrition_Product_Buckets",
+  "Row_Count": "130244",
+  "Size_MB": "18.44",
+  "Size_GB": "0.018",
+  "Created_At": "2025-08-26T20:50:37.042000",
+  "Last_Modified": "2025-08-26T20:50:37.042000"
+}, {
+  "Table_Name": "Country",
+  "Row_Count": "248",
+  "Size_MB": "0.02",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:50:11.793000",
+  "Last_Modified": "2025-08-26T20:50:11.793000"
+}, {
+  "Table_Name": "Locale",
+  "Row_Count": "329",
+  "Size_MB": "0.02",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:50:34.429000",
+  "Last_Modified": "2025-08-26T20:50:34.429000"
+}, {
+  "Table_Name": "Subsite",
+  "Row_Count": "102",
+  "Size_MB": "0.02",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T21:14:44.484000",
+  "Last_Modified": "2025-08-26T21:14:44.484000"
+}, {
+  "Table_Name": "Warehouse_Dim",
+  "Row_Count": "160",
+  "Size_MB": "0.01",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T21:14:45.960000",
+  "Last_Modified": "2025-08-26T21:14:45.960000"
+}, {
+  "Table_Name": "Delivery_Option_Dim",
+  "Row_Count": "79",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:50:29.997000",
+  "Last_Modified": "2025-08-26T20:50:29.997000"
+}, {
+  "Table_Name": "Special_Offer_Calculator_Dim",
+  "Row_Count": "32",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T21:08:18.891000",
+  "Last_Modified": "2025-08-26T21:08:18.891000"
+}, {
+  "Table_Name": "Special_Offer_Trigger_Dim",
+  "Row_Count": "18",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T21:08:22.788000",
+  "Last_Modified": "2025-08-26T21:08:22.788000"
+}, {
+  "Table_Name": "Order_Line_Status_Dim",
+  "Row_Count": "23",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:51:08.848000",
+  "Last_Modified": "2025-08-26T20:51:08.848000"
+}, {
+  "Table_Name": "Order_Type_Dim",
+  "Row_Count": "16",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:51:14.810000",
+  "Last_Modified": "2025-08-26T20:51:14.810000"
+}, {
+  "Table_Name": "Order_Status_Dim",
+  "Row_Count": "9",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:51:13.352000",
+  "Last_Modified": "2025-08-26T20:51:13.352000"
+}, {
+  "Table_Name": "Site",
+  "Row_Count": "3",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T21:08:17.587000",
+  "Last_Modified": "2025-08-26T21:08:17.587000"
+}, {
+  "Table_Name": "Order_Payment_Status_Dim",
+  "Row_Count": "11",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T20:51:10.451000",
+  "Last_Modified": "2025-08-26T20:51:10.451000"
+}, {
+  "Table_Name": "Stock_Status_Dim",
+  "Row_Count": "10",
+  "Size_MB": "0.0",
+  "Size_GB": "0.0",
+  "Created_At": "2025-08-26T21:14:34.778000",
+  "Last_Modified": "2025-08-26T21:14:34.778000"
+}]

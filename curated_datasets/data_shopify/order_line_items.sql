@@ -1,5 +1,7 @@
--- View for Shopify order line items
-CREATE VIEW data_shopify.order_line_items
+-- Materialized View for Shopify order line items
+CREATE MATERIALIZED VIEW data_shopify.order_line_items
+ENGINE = MergeTree()
+ORDER BY (order_id, line_item_id)
 AS
 SELECT
     -- Order reference
