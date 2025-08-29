@@ -30,8 +30,8 @@ USING (
       -- Event type from type field
       e.type AS event_type,
       
-      -- Extract revenue if present
-      CAST(JSON_VALUE(e.attributes, '$.event_properties."$value"') AS NUMERIC) AS revenue,
+      -- Extract revenue if present - cast to NUMERIC
+      SAFE_CAST(JSON_VALUE(e.attributes, '$.event_properties."$value"') AS NUMERIC) AS revenue,
       
       -- Event timestamp
       e.datetime AS event_timestamp
@@ -86,8 +86,8 @@ USING (
       COUNT(DISTINCT CASE WHEN e.revenue > 0 THEN e.profile_id END) AS placed_orders,
       COUNT(CASE WHEN e.revenue > 0 THEN 1 END) AS ordered_products,
       
-      -- Revenue
-      SUM(CASE WHEN e.revenue > 0 THEN e.revenue ELSE 0 END) AS total_revenue,
+      -- Revenue - ensure NUMERIC type by casting the SUM result
+      CAST(COALESCE(SUM(CASE WHEN e.revenue > 0 THEN e.revenue END), 0) AS NUMERIC) AS total_revenue,
       
       -- Unique profiles
       COUNT(DISTINCT e.profile_id) AS unique_profiles
